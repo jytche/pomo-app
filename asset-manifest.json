@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/pomo-app/static/css/main.eefc237f.css",
+    "main.js": "/pomo-app/static/js/main.e6c83bdd.js",
+    "static/media/alarm.mp3": "/pomo-app/static/media/alarm.ec348014f7e3ec4e2e62.mp3",
+    "static/media/click.mp3": "/pomo-app/static/media/click.8a763dc94dd8642a3eed.mp3",
+    "index.html": "/pomo-app/index.html",
+    "main.eefc237f.css.map": "/pomo-app/static/css/main.eefc237f.css.map",
+    "main.e6c83bdd.js.map": "/pomo-app/static/js/main.e6c83bdd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eefc237f.css",
+    "static/js/main.e6c83bdd.js"
+  ]
+}
