@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Timer from "./Timer";
 import Header from "./Header";
 
