@@ -1,0 +1,69 @@
+body {
+  background-color: #F3F0CA !important;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+
+h1 {
+  font-size: 50px !important;
+  color: #192655 !important;
+}
+
+.timerBox {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  font-size: 10rem;
+  color: #192655;
+  justify-self: center;
+}
+
+.pomoButton {
+  margin-top: 50px;
+  justify-self: center;
+  margin: 10px;
+  width: 200px;
+  height: 75px;
+  background-color: #3F72AF !important;
+  font-size: 20px !important;
+  border-color: #3F72AF !important;
+  text-align: center;
+}
+
+.breakButton {
+  margin-top: 50px;
+  justify-self: center;
+  margin: 10px;
+  width: 200px;
+  height: 75px;
+  font-size: 20px !important;
+  text-align: center;
+  background-color: #E1AA74 !important;
+  border-color: #E1AA74 !important;
+}
+
+.startPauseButton {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  justify-self: center;
+  margin: 50px;
+  width: 250px;
+  height: 75px;
+  background-color: #3876BF !important;
+  font-size: 30px !important;
+  border-color: #3876BF !important;
+  text-align: center;
+}
