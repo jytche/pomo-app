@@ -3,11 +3,16 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import alarm from '../sounds/alarm.mp3';
 import click from '../sounds/click.mp3';
+import MydModalWithGrid from "./Settings";
 
 function Timer() {
-    const pomodoroTime = 25 * 60;
-    const shortBreakTime = 5 * 60;
-    const longBreakTime = 15 * 60;
+    const [pomodoroTimeMin, setPomoTimeMin] = useState(25);
+    const [shortBreakTimeMin, setShortBreakTimeMin] = useState(5);
+    const [longBreakTimeMin, setLongBreakTimeMin] = useState(15);
+
+    const [pomodoroTime, setPomoTime] = useState(pomodoroTimeMin * 60);
+    const [shortBreakTime, setShortBreakTime] = useState(shortBreakTimeMin * 60);
+    const [longBreakTime, setLongBreakTime] = useState(longBreakTimeMin * 60);
   
     const [timeLeft, setTimeLeft] = useState(pomodoroTime);
     const [timerRunning, setTimerRunning] = useState(false);
@@ -15,6 +20,20 @@ function Timer() {
     const [currentMode, setCurrentMode] = useState('pomodoro');
 
     const intervalRef = useRef(null);
+
+    const [modalShow, setModalShow] = useState(false);
+
+    const handlePomoTimeChange = (newTime) => {
+      setPomoTimeMin(newTime);
+    };
+
+    const handleShortBreakTimeChange = (newTime) => {
+      setShortBreakTimeMin(newTime);
+    }
+
+    const handleLongBreakTimeChange = (newTime) => {
+      setLongBreakTimeMin(newTime);
+    }
 
     function playSound(mp3) {
         new Audio(mp3).play()
@@ -59,6 +78,16 @@ function Timer() {
         console.log(currentMode);
       }
     }, [timeLeft, sessionCount, currentMode]);
+
+    useEffect(() => {
+      setPomoTime(pomodoroTimeMin * 60);
+      setShortBreakTime(shortBreakTimeMin * 60);
+      setLongBreakTime(longBreakTimeMin * 60);
+    }, [pomodoroTimeMin, shortBreakTimeMin, longBreakTimeMin]);
+
+    useEffect(() => {
+      setTimeLeft(pomodoroTime);
+    }, [pomodoroTime]);
     
     const startPauseTimer = () => {
         playSound(click);
@@ -83,11 +112,24 @@ function Timer() {
 
     return (
         <Container className="timerBox">
-            <Button className="pomoButton" onClick={() => resetTimer(pomodoroTime)}>Pomodoro<br></br>(25 min)</Button>
-            <Button className="breakButton" onClick={() => resetTimer(shortBreakTime)}>Short Break<br></br>(5 min)</Button>
-            <Button className="breakButton" onClick={() => resetTimer(longBreakTime)}>Long Break<br></br>(15 min)</Button>
+            <Button className="pomoButton" onClick={() => resetTimer(pomodoroTime)}>Pomodoro<br></br>({pomodoroTimeMin} min)</Button>
+            <Button className="breakButton" onClick={() => resetTimer(shortBreakTime)}>Short Break<br></br>({shortBreakTimeMin} min)</Button>
+            <Button className="breakButton" onClick={() => resetTimer(longBreakTime)}>Long Break<br></br>({longBreakTimeMin} min)</Button>
             <div className="timer">{formatTime(timeLeft)}</div>
             <Button className="startPauseButton" onClick={startPauseTimer}>{timerRunning ? 'Pause' : 'Start'}</Button>
+            <>
+        <Button className="settingsButton" variant="primary" onClick={() => setModalShow(true)}>
+          Settings
+        </Button>
+
+        <MydModalWithGrid 
+          show={modalShow} 
+          onHide={() => setModalShow(false)} 
+          pomoDuration={pomodoroTimeMin} onPomoTimeChange={handlePomoTimeChange}
+          shortBreakDuration={shortBreakTimeMin} onShortBreakTimeChange={handleShortBreakTimeChange}
+          longBreakDuration={longBreakTimeMin} onLongBreakTimeChange={handleLongBreakTimeChange}
+          />
+      </>
         </Container>
       );
     }
