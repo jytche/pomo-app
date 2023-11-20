@@ -83,9 +83,9 @@ function Timer() {
 
     return (
         <Container className="timerBox">
-            <Button className="pomoButton" onClick={() => resetTimer(pomodoroTime)}>Pomodoro</Button>
-            <Button className="breakButton" onClick={() => resetTimer(shortBreakTime)}>Short Break</Button>
-            <Button className="breakButton" onClick={() => resetTimer(longBreakTime)}>Long Break</Button>
+            <Button className="pomoButton" onClick={() => resetTimer(pomodoroTime)}>Pomodoro<br></br>(25 min)</Button>
+            <Button className="breakButton" onClick={() => resetTimer(shortBreakTime)}>Short Break<br></br>(5 min)</Button>
+            <Button className="breakButton" onClick={() => resetTimer(longBreakTime)}>Long Break<br></br>(15 min)</Button>
             <div className="timer">{formatTime(timeLeft)}</div>
             <Button className="startPauseButton" onClick={startPauseTimer}>{timerRunning ? 'Pause' : 'Start'}</Button>
         </Container>
