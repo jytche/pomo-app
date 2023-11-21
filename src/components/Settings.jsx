@@ -86,6 +86,7 @@ function MydModalWithGrid(props) {
             <Col style={{fontSize: '25px', marginBottom: '10px', alignItems: 'center'}} xs={8} md={6}>
             <Form style={{textAlign: 'right'}}>
               <Form.Check
+                disabled
                 type="switch"
                 className="darkModeSwitch"
               />
