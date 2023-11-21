@@ -1,3 +1,7 @@
+html * {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif, monospace !important;
+}
+
 body {
   background-color: #F3F0CA !important;
 }
@@ -13,6 +17,12 @@ body {
 h1 {
   font-size: 50px !important;
   color: #192655 !important;
+}
+
+.description {
+  margin-top: 50px !important;
+  font-size: 25px !important;
+
 }
 
 .timerBox {
@@ -36,9 +46,9 @@ h1 {
   justify-self: center;
   margin: 10px;
   width: 200px;
-  height: 75px;
+  height: 100px;
   background-color: #3F72AF !important;
-  font-size: 20px !important;
+  font-size: 25px !important;
   border-color: #3F72AF !important;
   text-align: center;
 }
@@ -48,8 +58,8 @@ h1 {
   justify-self: center;
   margin: 10px;
   width: 200px;
-  height: 75px;
-  font-size: 20px !important;
+  height: 100px;
+  font-size: 25px !important;
   text-align: center;
   background-color: #E1AA74 !important;
   border-color: #E1AA74 !important;
@@ -66,4 +76,44 @@ h1 {
   font-size: 30px !important;
   border-color: #3876BF !important;
   text-align: center;
+}
+
+.settingsTitle {
+  font-size: 20px !important;
+  text-align: center;
+}
+
+.settingsCount {
+  text-align: center;
+  font-size: 30px !important;
+}
+
+.settingsButton {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  text-align: center;
+  background-color: #3876BF !important;
+  font-size: 20px !important;
+  border-color: #3876BF !important;
+  margin: 5px;
+  justify-self: center;
+}
+
+.durationSettingButton {
+  background-color: #3876BF !important;
+  font-size: 15px !important;
+  border-color: #3876BF !important;
+  margin: 5px;
+  height: 40px;
+  width: 40px;
+}
+
+.saveButton {
+  background-color: #3876BF !important;
+  font-size: 15px !important;
+  border-color: #3876BF !important;
+}
+
+.settingsModal {
+  background-color: #F3F0CA !important;
 }

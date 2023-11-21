@@ -10,9 +10,9 @@ function Timer() {
     const [shortBreakTimeMin, setShortBreakTimeMin] = useState(5);
     const [longBreakTimeMin, setLongBreakTimeMin] = useState(15);
 
-    const [pomodoroTime, setPomoTime] = useState(pomodoroTimeMin * 60);
-    const [shortBreakTime, setShortBreakTime] = useState(shortBreakTimeMin * 60);
-    const [longBreakTime, setLongBreakTime] = useState(longBreakTimeMin * 60);
+    const [pomodoroTime, setPomoTime] = useState(pomodoroTimeMin * 1);
+    const [shortBreakTime, setShortBreakTime] = useState(shortBreakTimeMin * 1);
+    const [longBreakTime, setLongBreakTime] = useState(longBreakTimeMin * 1);
   
     const [timeLeft, setTimeLeft] = useState(pomodoroTime);
     const [timerRunning, setTimerRunning] = useState(false);
@@ -64,15 +64,18 @@ function Timer() {
             setTimeLeft(longBreakTime); // Set time for a long break
             setCurrentMode('longBreak'); // Update the mode to long break
             setSessionCount(0); // Reset session count for a new set of Pomodoro sessions
+            updateThemeColor('longBreak');
           } else {
             setTimeLeft(shortBreakTime); // Set time for a short break
             setCurrentMode('shortBreak'); // Update the mode to short break
             setSessionCount((prevCount) => prevCount + 1); // Increment session count for a completed Pomodoro
+            updateThemeColor('shortBreak');
           }
         } else {
           // If it was a break that ended, start a new Pomodoro session
           setTimeLeft(pomodoroTime);
           setCurrentMode('pomodoro'); // Update the mode to Pomodoro for the next session
+          updateThemeColor('pomodoro');
         }
         console.log(sessionCount);
         console.log(currentMode);
@@ -86,15 +89,52 @@ function Timer() {
     }, [pomodoroTimeMin, shortBreakTimeMin, longBreakTimeMin]);
 
     useEffect(() => {
-      setTimeLeft(pomodoroTime);
-    }, [pomodoroTime]);
+      switch (currentMode) {
+        case 'pomodoro':
+          setTimeLeft(pomodoroTime);
+          break;
+        case 'shortBreak':
+          setTimeLeft(shortBreakTime);
+          break;
+        case 'longBreak':
+          setTimeLeft(longBreakTime);
+          break;
+        default:
+          setTimeLeft(pomodoroTime); // Default to pomodoro time if mode is unrecognized
+      }
+    }, [pomodoroTime, shortBreakTime, longBreakTime, currentMode]);
     
+    
+    const updateThemeColor = (mode) => {
+      let mainColor, backgroundColor;
+      switch (mode) {
+        case 'pomodoro':
+          mainColor = '#D45F5F';
+          backgroundColor = '#994545';
+          break;
+        case 'shortBreak':
+          mainColor = '#5391B8';
+          backgroundColor = '#467A9A';
+          break;
+        case 'longBreak':
+          mainColor = '#38637D';
+          backgroundColor = '#2B4C60';
+          break;
+        case 'darkMode':
+          mainColor = '#484F54';
+          backgroundColor = '#16181A';
+      }
+
+      document.documentElement.style.setProperty('--main-color', mainColor);
+      document.documentElement.style.setProperty('--background-color', backgroundColor);
+    }
+
     const startPauseTimer = () => {
         playSound(click);
         setTimerRunning((running) => !running);
     };
     
-    const resetTimer = (time) => {
+    const resetTimer = (time, mode) => {
         clearInterval(intervalRef.current);
         setTimeLeft(time);
         setTimerRunning(false);
@@ -102,6 +142,7 @@ function Timer() {
         if (time === pomodoroTime) {
           setSessionCount(0);
         }
+        updateThemeColor(mode);
     };
     
     const formatTime = (time) => {
@@ -112,9 +153,9 @@ function Timer() {
 
     return (
         <Container className="timerBox">
-            <Button className="pomoButton" onClick={() => resetTimer(pomodoroTime)}>Pomodoro<br></br>({pomodoroTimeMin} min)</Button>
-            <Button className="breakButton" onClick={() => resetTimer(shortBreakTime)}>Short Break<br></br>({shortBreakTimeMin} min)</Button>
-            <Button className="breakButton" onClick={() => resetTimer(longBreakTime)}>Long Break<br></br>({longBreakTimeMin} min)</Button>
+            <Button className="pomoButton" onClick={() => resetTimer(pomodoroTime, 'pomodoro')}>Pomodoro<br></br>({pomodoroTimeMin} min)</Button>
+            <Button className="breakButton" onClick={() => resetTimer(shortBreakTime, 'shortBreak')}>Short Break<br></br>({shortBreakTimeMin} min)</Button>
+            <Button className="breakButton" onClick={() => resetTimer(longBreakTime, 'longBreak')}>Long Break<br></br>({longBreakTimeMin} min)</Button>
             <div className="timer">{formatTime(timeLeft)}</div>
             <Button className="startPauseButton" onClick={startPauseTimer}>{timerRunning ? 'Pause' : 'Start'}</Button>
             <>

@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Counter from '../components/Counter';
+import Form from 'react-bootstrap/Form';
 
 function MydModalWithGrid(props) {
     const pomoTitle = "Pomodoro";
@@ -75,6 +76,20 @@ function MydModalWithGrid(props) {
             </Col>
             <Col xs={6} md={4}>
               <Counter title={longBreakTimeTitle} time={longBreakTime} onCountChange={handleLongBreakTimeChange}/>
+            </Col>
+          </Row>
+          <br></br>
+          <Row>
+            <Col style={{fontSize: '25px', marginBottom: '10px', alignItems: 'center'}} xs={8} md={6}>
+              Dark Mode
+            </Col>
+            <Col style={{fontSize: '25px', marginBottom: '10px', alignItems: 'center'}} xs={8} md={6}>
+            <Form style={{textAlign: 'right'}}>
+              <Form.Check
+                type="switch"
+                className="darkModeSwitch"
+              />
+            </Form>
             </Col>
           </Row>
 
