@@ -96,9 +96,10 @@ function MydModalWithGrid(props) {
       <Modal.Body className="settingsModal">
         <Container>
           <Row className="alarmRow">
-            <Col className="durationRow" xs={12} md={12}>
-              <div>Timer Duration (minutes) </div>  
+            <Col className="durationRow d-flex align-items-center" xs={12} md={12}>
+              <div>Time (minutes) </div>  
                 <OverlayTrigger
+                  className="settingsOverlay"
                   placement="right"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip("1 to 1000 minutes")}>
@@ -123,8 +124,8 @@ function MydModalWithGrid(props) {
           </Row>
 
           <Row className="alarmRow">
-            <Col className="alarmDurationRow" xs={12} md={12}>
-              <div>Alarm Duration (seconds)  </div>
+            <Col className="alarmDurationRow d-flex align-items-center" xs={12} md={12}>
+              <div>Alarm (seconds)  </div>
               <OverlayTrigger
                   placement="right"
                   delay={{ show: 250, hide: 400 }}
