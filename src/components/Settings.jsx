@@ -89,14 +89,14 @@ function MydModalWithGrid(props) {
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header className="settingsModal" closeButton closeVariant='white'>
-        <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Title id="contained-modal-title-vcenter" className="titleRow">
           Settings
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="settingsModal">
         <Container>
-          <Row className="settingsRow">
-            <Col style={{display: 'flex', fontSize: '25px', marginBottom: '10px', alignItems: 'center'}} xs={12} md={12}>
+          <Row className="alarmRow">
+            <Col className="durationRow" xs={12} md={12}>
               <div>Timer Duration (minutes) </div>  
                 <OverlayTrigger
                   placement="right"
@@ -111,37 +111,19 @@ function MydModalWithGrid(props) {
           </Row>
 
           <Row className="settingsRow">
-            <Col xs={6} md={4}>
+            <Col xs={4} md={4}>
               <Counter title={pomoTitle} time={pomoTime} onCountChange={handlePomoTimeChange} minTime={1} maxTime={1000}/>
             </Col>
-            <Col xs={6} md={4}>
+            <Col xs={4} md={4}>
               <Counter title={shortBreakTimeTitle} time={shortBreakTime} onCountChange={handleShortBreakTimeChange} minTime={1} maxTime={1000}/>
             </Col>
-            <Col xs={6} md={4}>
+            <Col xs={4} md={4}>
               <Counter title={longBreakTimeTitle} time={longBreakTime} onCountChange={handleLongBreakTimeChange} minTime={1} maxTime={1000}/>
-            </Col>
-          </Row>
-          <Row className="darkModeRow">
-            <Col style={{fontSize: '25px', marginBottom: '10px', alignItems: 'center'}} xs={8} md={6}>
-              Dark Mode
-            </Col>
-            <Col style={{fontSize: '25px', marginBottom: '10px', alignItems: 'center'}} xs={8} md={6}>
-            <Form style={{textAlign: 'right'}}>
-              <Form.Check
-                type="switch"
-                className="darkModeSwitch"
-                onChange={()=> {
-                  handleSwitchChange();
-                  props.onThemeChange();
-                }}
-                checked={props.themeStatus === 'dark'}
-              />
-            </Form>
             </Col>
           </Row>
 
           <Row className="alarmRow">
-            <Col style={{display: 'flex', fontSize: '25px', marginBottom: '10px', alignItems: 'center'}} xs={12} md={12}>
+            <Col className="alarmDurationRow" xs={12} md={12}>
               <div>Alarm Duration (seconds)  </div>
               <OverlayTrigger
                   placement="right"
@@ -154,9 +136,28 @@ function MydModalWithGrid(props) {
             </Col>
           </Row>
 
-          <Row>
-            <Col xs={6} md={4}>
+          <Row className="alarmCounterRow">
+            <Col xs={4} md={4}>
               <Counter time={alarmTime} onCountChange={handleAlarmTimeChange} minTime={1} maxTime={7}/>
+            </Col>
+          </Row>
+
+          <Row className="darkModeRow">
+            <Col className="darkRow" xs={8} md={6}>
+              Dark Mode
+            </Col>
+            <Col style={{fontSize: '25px', marginBottom: '10px', alignItems: 'center'}} xs={4} md={6}>
+            <Form style={{textAlign: 'right'}}>
+              <Form.Check
+                type="switch"
+                className="darkModeSwitch"
+                onChange={()=> {
+                  handleSwitchChange();
+                  props.onThemeChange();
+                }}
+                checked={props.themeStatus === 'dark'}
+              />
+            </Form>
             </Col>
           </Row>
 

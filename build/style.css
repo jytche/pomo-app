@@ -240,6 +240,40 @@ a, a:link, a:visited, a:hover, a:active {
   color: white !important;
 }
 
+.settingsRow {
+  border-bottom: 1px solid white;
+}
+
+.darkModeRow {
+  padding-top: 16px !important;
+  border-bottom: 1px solid white;
+}
+
+.alarmRow {
+  padding-top: 16px !important;
+  border-bottom: 1px solid white;
+}
+
+.alarmCounter {
+  padding-top: 20px !important;
+  padding-bottom: 0px !important;
+}
+
+.counterBox {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+
+.modal-content {
+  border: 1px solid whitesmoke !important;
+  border-radius: inherit;
+  outline: none !important;
+}
+
+.btn-close {
+  color: white !important;
+}
+
 .darkModeSwitch .form-check-input:checked {
   background-color: #484F54; /* The color you want for the switch when it is on */
   border-color: #484F54;
@@ -247,4 +281,13 @@ a, a:link, a:visited, a:hover, a:active {
 
 .form-check-input::after {
   background-color: #fff; /* Slider color */
+}
+
+#button-tooltip > .tooltip-inner {
+  background-color: var(--bg-color);
+  border: 1px solid white;
+}
+
+.tooltip-arrow {
+  display: none !important;
 }
