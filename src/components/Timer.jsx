@@ -19,6 +19,12 @@ function Timer() {
     const [sessionCount, setSessionCount] = useState(0);
     const [currentMode, setCurrentMode] = useState('pomodoro');
 
+    const [theme, setTheme] = useState('light');
+
+    const [alarmTimeSec, setAlarmTimeSec] = useState(5);
+
+    const [isAlarmPlaying, setIsAlarmPlaying] = useState(false);
+
     const intervalRef = useRef(null);
 
     const [modalShow, setModalShow] = useState(false);
@@ -35,8 +41,24 @@ function Timer() {
       setLongBreakTimeMin(newTime);
     }
 
+    const handleThemeChange = (newTheme) => {
+      setTheme(newTheme);
+    }
+
+    const handleAlarmTimeChange = (newDuration) => {
+      setAlarmTimeSec(newDuration);
+    }
+
     function playSound(mp3) {
-        new Audio(mp3).play()
+      const audio = new Audio(mp3);
+        audio.play();
+      
+      if (isAlarmPlaying) {
+        setTimeout(() => {
+          audio.pause();
+          audio.currentTime = 0;
+        }, alarmTimeSec * 1000);
+      }
     }
 
     useEffect(() => {
@@ -52,34 +74,39 @@ function Timer() {
       }, [timerRunning]);
 
     useEffect(() => {
-      if (timeLeft === 0) {
+      if (timeLeft <= 0) {
+        setIsAlarmPlaying('true');
         playSound(alarm);
-        clearInterval(intervalRef.current);
-        setTimerRunning(false);
+          clearInterval(intervalRef.current);
+          setTimerRunning(false);
     
-        // Check if it was a Pomodoro session
-        if (currentMode === 'pomodoro') {
-          // Check if 4 Pomodoro sessions have been completed
-          if (sessionCount === 3) {
-            setTimeLeft(longBreakTime); // Set time for a long break
-            setCurrentMode('longBreak'); // Update the mode to long break
-            setSessionCount(0); // Reset session count for a new set of Pomodoro sessions
-            updateThemeColor('longBreak');
+          // Check if it was a Pomodoro session
+          if (currentMode === 'pomodoro') {
+            // Check if 4 Pomodoro sessions have been completed
+            if (sessionCount === 3) {
+              setTimeLeft(longBreakTime); // Set time for a long break
+              setCurrentMode('longBreak'); // Update the mode to long break
+              setSessionCount(0); // Reset session count for a new set of Pomodoro sessions
+              updateThemeColor('longBreak');
+            } else {
+              setTimeLeft(shortBreakTime); // Set time for a short break
+              setCurrentMode('shortBreak'); // Update the mode to short break
+              setSessionCount((prevCount) => prevCount + 1); // Increment session count for a completed Pomodoro
+              updateThemeColor('shortBreak');
+            }
           } else {
-            setTimeLeft(shortBreakTime); // Set time for a short break
-            setCurrentMode('shortBreak'); // Update the mode to short break
-            setSessionCount((prevCount) => prevCount + 1); // Increment session count for a completed Pomodoro
-            updateThemeColor('shortBreak');
+            // If it was a break that ended, start a new Pomodoro session
+            setTimeLeft(pomodoroTime);
+            setCurrentMode('pomodoro'); // Update the mode to Pomodoro for the next session
+            updateThemeColor('pomodoro');
           }
-        } else {
-          // If it was a break that ended, start a new Pomodoro session
-          setTimeLeft(pomodoroTime);
-          setCurrentMode('pomodoro'); // Update the mode to Pomodoro for the next session
-          updateThemeColor('pomodoro');
-        }
-        console.log(sessionCount);
-        console.log(currentMode);
-      }
+          console.log(sessionCount);
+          console.log(currentMode);
+
+          if (timeLeft <= 0) {
+            setTimeLeft(1);
+          }
+      } 
     }, [timeLeft, sessionCount, currentMode]);
 
     useEffect(() => {
@@ -103,6 +130,23 @@ function Timer() {
           setTimeLeft(pomodoroTime); // Default to pomodoro time if mode is unrecognized
       }
     }, [pomodoroTime, shortBreakTime, longBreakTime, currentMode]);
+
+    useEffect(() => {
+      const localTheme = localStorage.getItem('theme')
+      if (localTheme) {
+        setTheme(localTheme)
+      }
+    })
+
+    useEffect(() => {
+      if(theme === 'dark') {
+        console.log("change to dark");
+        document.documentElement.style.setProperty('--main-color', '#3A3A3A');
+        document.documentElement.style.setProperty('--background-color', '#000000');
+      } else {
+        updateThemeColor(currentMode);
+      }
+    }, [theme, currentMode]);
     
     
     const updateThemeColor = (mode) => {
@@ -120,9 +164,6 @@ function Timer() {
           mainColor = '#38637D';
           backgroundColor = '#2B4C60';
           break;
-        case 'darkMode':
-          mainColor = '#484F54';
-          backgroundColor = '#16181A';
       }
 
       document.documentElement.style.setProperty('--main-color', mainColor);
@@ -142,7 +183,9 @@ function Timer() {
         if (time === pomodoroTime) {
           setSessionCount(0);
         }
+        if (theme === 'light') {
         updateThemeColor(mode);
+        }
     };
     
     const formatTime = (time) => {
@@ -169,6 +212,8 @@ function Timer() {
           pomoDuration={pomodoroTimeMin} onPomoTimeChange={handlePomoTimeChange}
           shortBreakDuration={shortBreakTimeMin} onShortBreakTimeChange={handleShortBreakTimeChange}
           longBreakDuration={longBreakTimeMin} onLongBreakTimeChange={handleLongBreakTimeChange}
+          themeStatus={theme} onThemeChange={handleThemeChange}
+          alarmDuration={alarmTimeSec} onAlarmTimeChange={handleAlarmTimeChange}
           />
       </>
         </Container>

@@ -15,14 +15,22 @@ const Counter = (props) => {
   const subtract = () => setCount((prev) => prev - 1);
 
   const handleChange = (event) => {
-    const newCount = parseInt(event.target.value, 10);
-    if (!isNaN(newCount) && newCount >= 1 && newCount <= 1000) {
+    const inputValue = event.target.value;
+
+    if (inputValue === "") {
+      setCount(1);
+      return;
+    }
+
+    const newCount = parseInt(inputValue, 10);
+
+    if (!isNaN(newCount) && newCount >= props.minTime && newCount <= props.maxTime) {
         setCount(newCount);
     }
   }
 
   return (
-    <div className="">
+    <div className="counterBox">
       <h1 className="settingsTitle">
         {props.title}
       </h1>
@@ -41,14 +49,14 @@ const Counter = (props) => {
         <Button
             className="durationSettingButton"
             onClick={subtract}
-            disabled={count <= 1}
+            disabled={count <= props.minTime}
         >
           -
         </Button>
         <Button
             className="durationSettingButton"
             onClick={add}
-            disabled={count >= 1000}
+            disabled={count >= props.maxTime}
         >
           +
         </Button>
